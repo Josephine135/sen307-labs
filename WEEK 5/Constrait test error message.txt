@@ -1,0 +1,78 @@
+# Week 5 Practical: Testing Database Constraints
+
+## Test 1: NOT NULL Constraint
+
+**SQL Statement:**
+```sql
+INSERT INTO Department (dept_name)
+VALUES (NULL);
+```
+
+**Expected Result:** Failed.
+
+**Reason:** The dept_name column has a NOT NULL constraint, meaning it cannot accept an empty or NULL value.
+
+**Error:** Column 'dept_name' cannot be null.
+
+## Test 2: CHECK Constraint
+
+**SQL Statement:**
+```sql
+INSERT INTO Course (course_code, course_title, credit_units)
+VALUES ('TST101', 'Test', 9);
+```
+
+**Expected Result:** Failed.
+
+**Reason:** The chk_credit_units constraint only allows credit units between 1 and 6.
+
+**Error:** Check constraint 'chk_credit_units' is violated.
+
+## Test 3: FOREIGN KEY Constraint
+
+**SQL Statement:**
+```sql
+INSERT INTO Student (matric_no, full_name, dept_id)
+VALUES ('TEST001', 'Test', 999);
+```
+
+**Expected Result:** Failed.
+
+**Reason:** Department ID 999 does not exist in the Department table.
+
+**Error:** Cannot add or update a child row: a foreign key constraint fails.
+
+## Test 4: ENUM Constraint
+
+**SQL Statement:**
+```sql
+INSERT INTO Student (matric_no, full_name, gender)
+VALUES ('TEST002', 'Test', 'X');
+```
+
+**Expected Result:** Failed.
+
+**Reason:** The gender column only accepts 'M' or 'F'.
+
+**Error:** Data truncated for column 'gender' at row 1.
+
+## Test 5: UNIQUE Constraint
+
+**SQL Statement:**
+```sql
+INSERT INTO Department (dept_name)
+VALUES ('Software Engineering');
+
+INSERT INTO Department (dept_name)
+VALUES ('Software Engineering');
+```
+
+**Expected Result:** First statement succeeds; second statement fails.
+
+**Reason:** The dept_name column has a UNIQUE constraint, which prevents duplicate department names.
+
+**Error:** Duplicate entry 'Software Engineering' for key 'dept_name'.
+
+## Conclusion
+
+The constraint tests demonstrated that MySQL enforces database rules and maintains data integrity. Invalid records were rejected because they violated the NOT NULL, CHECK, FOREIGN KEY, ENUM and UNIQUE constraints.
